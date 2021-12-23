@@ -63,8 +63,8 @@ class VisionTransformer(LightningModule):
         pred = self(x)
         loss = self.Loss(pred, y)
         train_acc = accuracy(pred, y)
-        self.log('train loss', loss/BatchSize)
-        self.log('train acc', train_acc)
+        self.log("train loss", loss/BatchSize, on_step=False, on_epoch=True, prog_bar=False, logger=True)
+        self.log('train acc', train_acc, on_step=False, on_epoch=True, prog_bar=False, logger=True)
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -73,8 +73,8 @@ class VisionTransformer(LightningModule):
         loss = self.Loss(pred, y)
         # import ipdb;ipdb.set_trace()
         test_acc = accuracy(pred, y)
-        self.log('test loss', loss/BatchSize)
-        self.log('test acc', test_acc)
+        self.log('test loss', loss/BatchSize, on_step=False, on_epoch=True, prog_bar=False, logger=True)
+        self.log('test acc', test_acc, on_step=False, on_epoch=True, prog_bar=False, logger=True)
         if test_acc > maxAcc:
             torch.save(self.state_dict(), 'model.pth')
 
